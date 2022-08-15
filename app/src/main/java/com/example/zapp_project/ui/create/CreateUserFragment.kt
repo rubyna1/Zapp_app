@@ -48,9 +48,8 @@ class CreateUserFragment : DaggerFragment() {
             val name = binding.fragmentCreateNameEditText.text.toString()
             val userName = binding.fragmentCreateUserNameEditText.text.toString()
             val email = binding.fragmentCreateEmailEditText.text.toString()
-            if (name.isEmpty() || userName.isEmpty() || email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(
-                    email
-                ).matches()
+            if (name.isEmpty() || userName.isEmpty() || email.isEmpty() || !Patterns.EMAIL_ADDRESS.
+                matcher(email).matches()
             ) {
                 when {
                     name.isEmpty() -> {
