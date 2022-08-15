@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Zapp_project</string>
+    <string name="idLabel">Id</string>
+    <string name="nameLabel">Name</string>
+    <string name="usernameLabel">UserName</string>
+    <string name="emailLabel">Email</string>
+    <string name="idHint">enter your id here...</string>
+    <string name="nameHint">enter your name here...</string>
+    <string name="userNameHint">enter your username here...</string>
+    <string name="emailHint">enter your email here...</string>
+    <string name="createUser">Create User</string>
+    <string name="editUser">Edit User</string>
+    <string name="viewUser">View User</string>
+    <string name="deleteUser">Delete User</string>
+    <string name="userData">User Data</string>
+    <string name="or">or</string>
+    <string name="goToHome">Go To Home</string>
+</resources>
