@@ -144,6 +144,7 @@
                 android:hint="@string/emailHint"
                 android:inputType="textEmailAddress"
                 android:imeOptions="actionDone"
+                android:importantForAutofill="no"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/fragment_create_email_text_view"
                 app:layout_constraintTop_toTopOf="parent"

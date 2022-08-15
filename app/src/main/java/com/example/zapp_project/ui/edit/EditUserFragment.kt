@@ -3,6 +3,7 @@ package com.example.zapp_project.ui.edit
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,27 +57,65 @@ class EditUserFragment : DaggerFragment() {
             requireActivity().onBackPressed()
         }
         binding.fragmentEditButton.setOnClickListener {
-            binding.fragmentEditProgressBar.root.visibility = View.VISIBLE
-            binding.fragmentEditButton.isEnabled = false
             hideSoftKeyboard(requireActivity())
-            editUserViewModel.updateUserData(
-                id!!, UpdateUserInput(
-                    Optional.presentIfNotNull(binding.fragmentEditNameEditText.text.toString()),
-                    Optional.presentIfNotNull(binding.fragmentEditUserNameEditText.text.toString()),
-                    Optional.presentIfNotNull(binding.fragmentEditEmailEditText.text.toString())
+            val name = binding.fragmentEditNameEditText.text.toString()
+            val userName = binding.fragmentEditUserNameEditText.text.toString()
+            val email = binding.fragmentEditEmailEditText.text.toString()
+            if (name.isEmpty() || userName.isEmpty() || email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(
+                    email
+                ).matches()
+            ) {
+                when {
+                    name.isEmpty() -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Name can not be empty",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    userName.isEmpty() -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Username can not be empty",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    email.isEmpty() -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Email can not be empty",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Email address invalid",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } else {
+                binding.fragmentEditProgressBar.root.visibility = View.VISIBLE
+                binding.fragmentEditButton.isEnabled = false
+                editUserViewModel.updateUserData(
+                    id!!, UpdateUserInput(
+                        Optional.presentIfNotNull(name),
+                        Optional.presentIfNotNull(userName),
+                        Optional.presentIfNotNull(email)
+                    )
                 )
-            )
+            }
         }
         id?.let { editUserViewModel.getUser(it) }
         editUserViewModel.userData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                binding.fragmentEditProgressBar.root.visibility=View.GONE
+                binding.fragmentEditProgressBar.root.visibility = View.GONE
                 binding.fragmentEditNameEditText.setText(it.name)
                 binding.fragmentEditEmailEditText.setText(it.email)
                 binding.fragmentEditUserNameEditText.setText(it.username)
-            }
-            else{
-                binding.fragmentEditProgressBar.root.visibility=View.GONE
+            } else {
+                binding.fragmentEditProgressBar.root.visibility = View.GONE
             }
         })
         editUserViewModel.updatedResponse.observe(viewLifecycleOwner, Observer {
